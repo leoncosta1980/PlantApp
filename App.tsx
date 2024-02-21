@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import "reflect-metadata"
 
 import RootStack from './src/navigation';
 
