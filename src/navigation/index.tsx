@@ -1,10 +1,8 @@
 import { Feather } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, View, StyleSheet } from 'react-native';
 
-import Details from '../screens/details';
-import Overview from '../screens/overview';
 import SplashScreen from '~/screens/SplashScreen';
 import HomeScreen from '~/screens/HomeScreen';
 import AddItemScreen from '~/screens/AddItemScreen';
@@ -17,13 +15,16 @@ export type RootStackParamList = {
   AddItemScreen: undefined; 
   EditItemScreen: undefined; 
   ShowItemsScreen: undefined;
-  Overview: undefined;
-  Details: { name: string };
+  // Overview: undefined;
+  // Details: { name: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-//const MyTheme = { ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#81C784', }, };
+const MyTheme = {
+  ...DefaultTheme,
+  colors: { ...DefaultTheme.colors, background: "#81C784" },
+};
 
 export default function RootStack() {
   return (

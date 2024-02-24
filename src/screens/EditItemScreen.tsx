@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StyleSheet, Image, TouchableOpacity, View, Text, Alert, TextInput } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 
 import { RootStackParamList } from '../navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Item } from '@/entities/Item';
 import connectDatabase from '~/database';
 
@@ -135,8 +134,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#04642c',
   },
   logo: {
-    width: 250,
-    height: 250,
+    width: 150,
+    height: 150,
     marginBottom: 0,
   },
   title: {
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputEdit: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#a2a9af',
     width: '80%',
     padding: 10,
     borderRadius: 10,

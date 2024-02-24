@@ -48,26 +48,31 @@ export default function ShowItemsScreen() {
       <Image source={require('@/assets/logo-color.png')} style={styles.logo} />
       <Text style={styles.title}>Meu Estoque</Text>
 
-      <FlatList
-        style={styles.flatList}
-        data={items}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemQuantity}>Quantidade: {item.quantity}</Text>
-            <Text style={styles.itemPrice}>Preço unitário: R${item.price}</Text>
-          </View>
-        )}
-      />
-
-      <View style={styles.tableRowResume}>
-        <Text style={styles.columnHeader}>Total de Itens</Text>
-        <Text style={styles.columnHeader}>Valor Total do Estoque R$</Text>
+      <View style={styles.tableContainer}>
+        <View style={styles.tableHeader}>
+          <Text style={styles.headerText}>Nome</Text>
+          <Text style={styles.headerText}>Estoque</Text>
+          <Text style={styles.headerText}>Preço unitário</Text>
+          <Text style={styles.headerText}>Saldo total</Text>
+        </View>
+        <FlatList
+          data={items}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.itemRow}>
+              <Text style={styles.itemData}>{item.name}</Text>
+              <Text style={styles.itemData}>{item.quantity}</Text>
+              <Text style={styles.itemData}>R${item.price}</Text>
+              <Text style={styles.itemData}>R${calculateTotalValue(item)}</Text>
+            </View>
+          )}
+          contentContainerStyle={styles.tableContent}
+        />
       </View>
-      <View style={styles.tableRowResume}>
-        <Text style={styles.tableCell}>{totalItems}</Text>
-        <Text style={styles.tableCell}>{totalValue.toFixed(2)}</Text>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Total de Itens: {totalItems}</Text>
+        <Text style={styles.footerText}>Valor Total do Estoque: R${totalValue.toFixed(2)}</Text>
       </View>
     </View>
   );
@@ -80,57 +85,65 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#04642c',
   },
-  flatList: {
-    width: '100%',
-  },
   logo: {
     width: 100,
     height: 100,
-    margin: 0,
+    margin: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 25,
     fontStyle: 'italic',
-    color: '#FFFFFF',
+    color: '#FFFFFF', // Cor do título
     marginBottom: 20,
   },
-  itemContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
+  tableContainer: {
+    flex: 1,
+    width: '95%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginBottom: 10,
   },
-  itemName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  itemQuantity: {
-    fontSize: 14,
-    marginBottom: 3,
-  },
-  itemPrice: {
-    fontSize: 14,
-  },
-  tableRowResume: {
+  tableHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#cfcaca',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC',
+    paddingVertical: 5,
+  },
+  headerText: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  itemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC',
+    paddingVertical: 5,
+  },
+  itemData: {
+    flex: 1,
+    fontSize: 10,
+    textAlign: 'center',
+  },
+  tableContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    width: '100%',
+    backgroundColor: '#3fd760',
     padding: 10,
     borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: '#000000',
+    borderTopColor: '#210123', // Cor do topo do footer
   },
-  columnHeader: {
-    fontSize: 16,
-    color: '#000000',
-    flex: 1,
-    textAlign: 'center',
+  footerText: {
+    fontSize: 13,
     fontWeight: 'bold',
-  },
-  tableCell: {
-    fontSize: 16,
-    color: '#000000',
-    flex: 1,
     textAlign: 'center',
+    color: '#1c2130', // Cor do texto do footer
   },
 });
