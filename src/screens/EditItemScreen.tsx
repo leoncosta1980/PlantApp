@@ -12,7 +12,6 @@ type EditItemScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Ed
 export default function EditItemScreen() {
   const navigation = useNavigation<EditItemScreenNavigationProps>();
 
-  
   const [searchItemName, setSearchItemName] = useState('');
   const [foundItem, setFoundItem] = useState<Item | null>(null);
   const [editedItemName, setEditedItemName] = useState('');
@@ -24,7 +23,7 @@ export default function EditItemScreen() {
     const itemRepository = connection.getRepository(Item);
 
     const item = await itemRepository.findOne({ where: { name: searchItemName } });
-    
+
     if (item) {
       setFoundItem(item);
       setEditedItemName(item.name);
@@ -58,11 +57,11 @@ export default function EditItemScreen() {
     if (foundItem) {
       Alert.alert('Confirmação', 'Tem certeza que deseja excluir este item?', [
         { text: 'Cancelar', style: 'cancel' },
-        { text: 'Excluir', onPress: async () => {
+        {
+          text: 'Excluir',
+          onPress: async () => {
             const connection = await connectDatabase();
             const itemRepository = connection.getRepository(Item);
-              await itemRepository.remove(foundItem);
-              await itemRepository.remove(foundItem);
 
             await itemRepository.remove(foundItem);
 
@@ -72,10 +71,13 @@ export default function EditItemScreen() {
             setEditedItemQuantity('');
             Alert.alert('Item excluído com sucesso!');
             navigation.navigate('HomeScreen');
+
+            // Recarregar a lista de itens após a exclusão
+            setSearchItemName(''); // Correção aqui
             connection.close();
-          }
+          },
         },
-      ], { cancelable: false });
+      ]);
     }
   };
 
@@ -95,18 +97,21 @@ export default function EditItemScreen() {
 
       {foundItem && (
         <>
+          <Text style={styles.label}>Novo Nome do Item:</Text>
           <TextInput
             placeholder="Novo Nome do Item"
             value={editedItemName}
             onChangeText={(text) => setEditedItemName(text)}
             style={styles.inputEdit}
           />
+          <Text style={styles.label}>Novo Preço do Item:</Text>
           <TextInput
             placeholder="Novo Preço"
             value={editedItemPrice}
             onChangeText={(text) => setEditedItemPrice(text)}
             style={styles.inputEdit}
           />
+          <Text style={styles.label}>Nova Quantidade do Item:</Text>
           <TextInput
             placeholder="Nova Quantidade"
             value={editedItemQuantity}
@@ -124,7 +129,7 @@ export default function EditItemScreen() {
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -152,6 +157,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
+  label: {
+    color: '#FFFFFF',
+    fontSize: 9,
+  },
   inputEdit: {
     backgroundColor: '#a2a9af',
     width: '80%',
@@ -163,10 +172,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#FFFFFF',
-    padding: 13,
+    padding: 10,
     borderRadius: 10,
-    marginVertical: 15,
-    shadowColor: '#000',
+    marginVertical: 10,
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     elevation: 10,
@@ -174,5 +183,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000000',
     fontSize: 15,
+    fontWeight: 'bold',
   },
 });

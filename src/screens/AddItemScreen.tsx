@@ -78,6 +78,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 15,
   },
+  label:{
+    color: '#FFFFFF',
+  },
   input: {
     backgroundColor: '#FFFFFF',
     width: '80%',
@@ -98,5 +101,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000000',
     fontSize: 15,
+    fontWeight: 'bold',
   },
 });
