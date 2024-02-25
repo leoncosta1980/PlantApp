@@ -21,7 +21,10 @@ export default function ShowItemsScreen() {
     const connection = await connectDatabase();
     const itemRepository = connection.getRepository(Item);
 
-    const itemsList = await itemRepository.find();
+    let itemsList = await itemRepository.find();
+
+    // Ordena os itens por nome em ordem alfabética
+    itemsList = itemsList.sort((a, b) => a.name.localeCompare(b.name));
 
     setItems(itemsList);
 
@@ -52,8 +55,8 @@ export default function ShowItemsScreen() {
         <View style={styles.tableHeader}>
           <Text style={styles.headerText}>Nome</Text>
           <Text style={styles.headerText}>Estoque</Text>
-          <Text style={styles.headerText}>Preço unitário</Text>
-          <Text style={styles.headerText}>Saldo total</Text>
+          <Text style={styles.headerText}>Preço unitário R$</Text>
+          <Text style={styles.headerText}>Saldo total R$</Text>
         </View>
         <FlatList
           data={items}
@@ -62,8 +65,8 @@ export default function ShowItemsScreen() {
             <View style={styles.itemRow}>
               <Text style={styles.itemData}>{item.name}</Text>
               <Text style={styles.itemData}>{item.quantity}</Text>
-              <Text style={styles.itemData}>R${item.price}</Text>
-              <Text style={styles.itemData}>R${calculateTotalValue(item)}</Text>
+              <Text style={styles.itemData}>{item.price}</Text>
+              <Text style={styles.itemData}>{calculateTotalValue(item)}</Text>
             </View>
           )}
           contentContainerStyle={styles.tableContent}
@@ -93,12 +96,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontStyle: 'italic',
-    color: '#FFFFFF', // Cor do título
+    color: '#FFFFFF', 
     marginBottom: 20,
   },
   tableContainer: {
     flex: 1,
-    width: '95%',
+    width: '97%',
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -108,13 +111,13 @@ const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     borderBottomColor: '#CCCCCC',
     paddingVertical: 5,
   },
   headerText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
   },
   itemData: {
     flex: 1,
-    fontSize: 10,
+    fontSize: 9,
     textAlign: 'center',
   },
   tableContent: {
@@ -138,12 +141,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#3fd760',
     padding: 10,
     borderTopWidth: 2,
-    borderTopColor: '#210123', // Cor do topo do footer
+    borderTopColor: '#210123', 
   },
   footerText: {
     fontSize: 13,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#1c2130', // Cor do texto do footer
+    color: '#1c2130', 
   },
 });

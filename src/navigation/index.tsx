@@ -1,7 +1,6 @@
-import { Feather } from '@expo/vector-icons';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import SplashScreen from '~/screens/SplashScreen';
 import HomeScreen from '~/screens/HomeScreen';
@@ -15,8 +14,6 @@ export type RootStackParamList = {
   AddItemScreen: undefined; 
   EditItemScreen: undefined; 
   ShowItemsScreen: undefined;
-  // Overview: undefined;
-  // Details: { name: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -30,9 +27,8 @@ export default function RootStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SplashScreen"
-        screenOptions={{ headerShown: false }}
-      >
+        initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
 
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -46,14 +42,3 @@ export default function RootStack() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  backButton: {
-    flexDirection: 'row',
-    paddingLeft: 20,
-  },
-  backButtonText: {
-    color: '#007AFF',
-    marginLeft: 4,
-  },
-});

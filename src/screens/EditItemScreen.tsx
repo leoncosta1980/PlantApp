@@ -73,7 +73,7 @@ export default function EditItemScreen() {
             navigation.navigate('HomeScreen');
 
             // Recarregar a lista de itens após a exclusão
-            setSearchItemName(''); // Correção aqui
+            setSearchItemName(''); 
             connection.close();
           },
         },
